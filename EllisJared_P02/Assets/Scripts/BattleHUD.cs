@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BattleHUD : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Text creatureName;
+    public Text creatureLevel;
+    private Creature _creature;
 
-    // Update is called once per frame
-    void Update()
+    public void SetCreatureData(Creature creature)
     {
-        
+        _creature = creature;
+        creatureName.text = creature.Base.CreatureName;
+        creatureLevel.text = $"LVL: {creatureLevel}";
     }
 }

@@ -1,18 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] BattleUnit playerUnit;
+    [SerializeField] BattleHUD playerHUD;
+
+    private void Start()
     {
-        
+        SetupBattle();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SetupBattle()
     {
-        
+        playerUnit.SetupCreature();
+        playerHUD.SetCreatureData(playerUnit.Creature);
     }
 }

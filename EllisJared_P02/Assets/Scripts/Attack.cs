@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
-public class Attack : MonoBehaviour
+public class Attack
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    private AttackBase _base;
+    private int _pp;
+    
+    public AttackBase Base{
+        get => _base;
+        set => _base = value;
     }
 
-    // Update is called once per frame
-    void Update()
+    public int Pp
     {
-        
+        get => _pp;
+        set => _pp = value;
+    }
+
+    public Attack(AttackBase aBase)
+    {
+        Base = aBase;
+        Pp = aBase.PP;
     }
 }
