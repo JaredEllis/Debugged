@@ -41,15 +41,17 @@ public class Creature
         _level = creatureLevel;
 
         _hp = MaxHP;
+        
+        _attacks = new List<Attack>();
 
         foreach (var lAttack in _base.LearnableAttacks)
         {
             if (lAttack.Level <= _level)
             {
-                _attacks?.Add(new Attack(lAttack.Attack));
+                _attacks.Add(new Attack(lAttack.Attack));
             }
 
-            if (_attacks != null && _attacks.Count >= 4)
+            if (_attacks.Count >= 4)
             {
                 break;
             }

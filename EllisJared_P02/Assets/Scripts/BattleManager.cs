@@ -23,6 +23,8 @@ public class BattleManager : MonoBehaviour
     {
         playerUnit.SetupCreature();
         playerHUD.SetCreatureData(playerUnit.Creature);
+        
+        battleDialogBox.SetCreatureAttacks(playerUnit.Creature.Attacks);
 
         enemyUnit.SetupCreature();
         enemyHUD.SetCreatureData(enemyUnit.Creature);
