@@ -24,23 +24,23 @@ public class CreatureBase : ScriptableObject
     
     [SerializeField] private List<LearnableAttack> learnableAttacks;
     public List<LearnableAttack> LearnableAttacks => learnableAttacks;
+}
 
-    public enum CreatureType
-    {
-        Normal,
-        Fire,
-        Shock,
-        Explosive,
-        Corrosive,
-    }
+public enum CreatureType
+{
+    Normal,
+    Fire,
+    Shock,
+    Explosive,
+    Corrosive,
+}
 
-    [Serializable]
-    public class LearnableAttack
-    {
-        [SerializeField] private AttackBase attack;
-        [SerializeField] private int level;
+[Serializable]
+public class LearnableAttack
+{
+    [SerializeField] private AttackBase attack;
+    [SerializeField] private int level;
 
-        public AttackBase Attack => attack;
-        public int Level => level;
-    }
+    public AttackBase Attack => attack;
+    public int Level => level;
 }

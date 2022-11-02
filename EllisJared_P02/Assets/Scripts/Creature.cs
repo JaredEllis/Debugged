@@ -46,10 +46,10 @@ public class Creature
         {
             if (lAttack.Level <= _level)
             {
-                _attacks.Add(new Attack(lAttack.Attack));
+                _attacks?.Add(new Attack(lAttack.Attack));
             }
 
-            if (_attacks.Count >= 4)
+            if (_attacks != null && _attacks.Count >= 4)
             {
                 break;
             }

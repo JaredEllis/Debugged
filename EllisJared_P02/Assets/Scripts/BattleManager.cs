@@ -12,17 +12,47 @@ public class BattleManager : MonoBehaviour
     [SerializeField] BattleUnit enemyUnit;
     [SerializeField] BattleHUD enemyHUD;
 
+    [SerializeField] BattleDialogBox battleDialogBox;
+
     private void Start()
     {
-        SetupBattle();
+        StartCoroutine(SetupBattle());
     }
 
-    private void SetupBattle()
+    private IEnumerator SetupBattle()
     {
         playerUnit.SetupCreature();
         playerHUD.SetCreatureData(playerUnit.Creature);
+
+        enemyUnit.SetupCreature();
+        enemyHUD.SetCreatureData(enemyUnit.Creature);
         
-        //enemyUnit.SetupCreature();
-        //enemyHUD.SetCreatureData(enemyUnit.Creature);
+        yield return (battleDialogBox.SetDialog($"An {enemyUnit.Creature.Base.name} has appeared."));
+        PlayerAction();
+    }
+
+    public void PlayerAction()
+    {
+        StartCoroutine(PlayerActionCoroutine());
+    }
+
+    IEnumerator PlayerActionCoroutine()
+    {
+        StartCoroutine(battleDialogBox.SetDialog("Select an action."));
+        yield return new WaitForSeconds(0.5f);
+        battleDialogBox.ToggleActions(true);
+    }
+
+    public void PlayerAttack()
+    {
+        StartCoroutine(PlayerAttackCoroutine());
+    }
+
+    IEnumerator PlayerAttackCoroutine()
+    {
+        battleDialogBox.ToggleDialogText(false);
+        battleDialogBox.ToggleActions(false);
+        yield return new WaitForSeconds(0.2f);
+        battleDialogBox.ToggleAttacks(true);
     }
 }
