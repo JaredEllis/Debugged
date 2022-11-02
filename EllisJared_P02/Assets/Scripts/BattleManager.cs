@@ -9,6 +9,9 @@ public class BattleManager : MonoBehaviour
     [SerializeField] BattleUnit playerUnit;
     [SerializeField] BattleHUD playerHUD;
 
+    [SerializeField] BattleUnit enemyUnit;
+    [SerializeField] BattleHUD enemyHUD;
+
     private void Start()
     {
         SetupBattle();
@@ -18,5 +21,8 @@ public class BattleManager : MonoBehaviour
     {
         playerUnit.SetupCreature();
         playerHUD.SetCreatureData(playerUnit.Creature);
+        
+        //enemyUnit.SetupCreature();
+        //enemyHUD.SetCreatureData(enemyUnit.Creature);
     }
 }

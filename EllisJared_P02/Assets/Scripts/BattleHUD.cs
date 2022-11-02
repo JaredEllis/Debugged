@@ -7,12 +7,13 @@ public class BattleHUD : MonoBehaviour
 {
     public Text creatureName;
     public Text creatureLevel;
-    private Creature _creature;
+
+    public HealthBar healthBar;
 
     public void SetCreatureData(Creature creature)
     {
-        _creature = creature;
         creatureName.text = creature.Base.CreatureName;
-        creatureLevel.text = $"LVL: {creatureLevel}";
+        creatureLevel.text = $"LVL: {creature.Level}";
+        healthBar.SetHP(creature.HP/creature.MaxHP);
     }
 }
