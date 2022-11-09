@@ -14,6 +14,8 @@ public class BattleManager : MonoBehaviour
 
     [SerializeField] BattleDialogBox battleDialogBox;
 
+    public Button primaryAttack;
+
     private void Start()
     {
         StartCoroutine(SetupBattle());
@@ -33,7 +35,20 @@ public class BattleManager : MonoBehaviour
         PlayerAction();
     }
 
-    public void PlayerAction()
+    IEnumerator EnemyAction()
+    {
+        Attack attack = enemyUnit.Creature.RandomAttack();
+        yield return battleDialogBox.SetDialog($"{enemyUnit.Creature.Base.name} has used {attack.Base.Name}");
+        
+        enemyUnit.PlayAttackAnimation();
+        playerUnit.PlayReceiveAttackAnimation();
+
+        yield return new WaitForSeconds(1.0f);
+
+        StartCoroutine(PlayerActionCoroutine());
+    }
+
+    private void PlayerAction()
     {
         StartCoroutine(PlayerActionCoroutine());
     }
@@ -43,6 +58,7 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(battleDialogBox.SetDialog("Select an action."));
         yield return new WaitForSeconds(0.5f);
         battleDialogBox.ToggleActions(true);
+        primaryAttack.Select();
     }
 
     public void PlayerAttack()
@@ -56,5 +72,37 @@ public class BattleManager : MonoBehaviour
         battleDialogBox.ToggleActions(false);
         yield return new WaitForSeconds(0.2f);
         battleDialogBox.ToggleAttacks(true);
+    }
+
+    public void AttackButtonPressed(int selectedAttack)
+    {
+        StartCoroutine(SelectAttack(selectedAttack, playerUnit.Creature.Attacks));
+    }
+
+    IEnumerator SelectAttack(int selectedAttack, List<Attack> attacks)
+    {
+        battleDialogBox.ToggleAttacks(false);
+        battleDialogBox.ToggleDialogText(true);
+        
+        switch (selectedAttack)
+        {
+            case 0:
+                yield return battleDialogBox.SetDialog($"You used {attacks[0].Base.Name}");
+                break;
+            case 1:
+                yield return battleDialogBox.SetDialog($"You used {attacks[1].Base.Name}");
+                break;
+            case 2:
+                yield return battleDialogBox.SetDialog($"You used {attacks[2].Base.Name}");
+                break;
+            case 3:
+                yield return battleDialogBox.SetDialog($"You used {attacks[3].Base.Name}");
+                break;
+        }
+        
+        playerUnit.PlayAttackAnimation();
+        enemyUnit.PlayReceiveAttackAnimation();
+        yield return new WaitForSeconds(1.0f);
+        StartCoroutine(EnemyAction());
     }
 }

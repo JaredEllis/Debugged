@@ -63,4 +63,10 @@ public class Creature
     public int Defense => Mathf.FloorToInt((_base.Defense * _level)/100.0f)+1;
     public int SpAttack => Mathf.FloorToInt((_base.SpAttack * _level)/100.0f)+1;
     public int Speed => Mathf.FloorToInt((_base.Speed * _level)/100.0f)+1;
+
+    public Attack RandomAttack()
+    {
+        int randId = Random.Range(0, Attacks.Count);
+        return Attacks[randId];
+    }
 }
