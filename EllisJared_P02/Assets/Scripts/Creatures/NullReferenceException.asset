@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edcae91f2b6eb884c87752312a9f973d, type: 3}
+  m_Name: NullReferenceException
+  m_EditorClassIdentifier: 
+  ID: 1
+  creatureName: NullReferenceException
+  description: A stupid fucking error that occurs when the developer does not assign
+    a reference to the variable.
+  frontSprite: {fileID: 21300000, guid: 6e081480a43f11f4c926dc81384c4a96, type: 3}
+  backSprite: {fileID: 21300000, guid: 6e081480a43f11f4c926dc81384c4a96, type: 3}
+  type: 2
+  maxHP: 100
+  attack: 34
+  defense: 45
+  spAttack: 55
+  spDefense: 50
+  speed: 48
+  learnableAttacks:
+  - attack: {fileID: 11400000, guid: 1dbccf4dd8b2ae449887aad9a6923bc0, type: 2}
+    level: 1
+  - attack: {fileID: 11400000, guid: 666b3c681f471134cbd85cfffec53cf1, type: 2}
+    level: 2
+  - attack: {fileID: 11400000, guid: d1b6f440ca9368c44b17545c18a146e3, type: 2}
+    level: 3
+  - attack: {fileID: 11400000, guid: 1063986b0af51d8409e29f0f969d1281, type: 2}
+    level: 4
