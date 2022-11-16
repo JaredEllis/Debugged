@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using MainMenu;
 using UnityEngine;
 
-public class MenuManager : MonoBehaviour
+namespace MainMenu
 {
-    public void QuitGame()
+    public class MenuManager : MonoBehaviour
     {
-        Application.Quit();
+        public void QuitGame()
+        {
+            Application.Quit();
+        }
     }
 }

@@ -32,7 +32,15 @@ public class BattleManager : MonoBehaviour
         enemyHUD.SetCreatureData(enemyUnit.Creature);
         
         yield return (battleDialogBox.SetDialog($"An {enemyUnit.Creature.Base.name} has appeared."));
-        PlayerAction();
+
+        if (playerUnit.Creature.Speed < enemyUnit.Creature.Speed)
+        {
+            StartCoroutine(EnemyAction());
+        }
+        else
+        {
+            PlayerAction();
+        }
     }
 
     IEnumerator EnemyAction()
