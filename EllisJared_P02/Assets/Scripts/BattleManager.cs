@@ -47,13 +47,29 @@ public class BattleManager : MonoBehaviour
     {
         Attack attack = enemyUnit.Creature.RandomAttack();
         yield return battleDialogBox.SetDialog($"{enemyUnit.Creature.Base.name} has used {attack.Base.Name}");
-        
+
+        var oldHPValue = playerUnit.Creature.HP;
+
         enemyUnit.PlayAttackAnimation();
         playerUnit.PlayReceiveAttackAnimation();
 
-        yield return new WaitForSeconds(1.0f);
+        var damageDesc = playerUnit.Creature.ReceiveDamage(enemyUnit.Creature, attack);
+        playerHUD.UpdateCreatureData(oldHPValue);
+        yield return ShowDamageDescription(damageDesc);
 
-        StartCoroutine(PlayerActionCoroutine());
+        if (damageDesc.Dead)
+        {
+            yield return battleDialogBox.SetDialog($"You have been killed by a {enemyUnit.Creature.Base.name}");
+            playerUnit.PlayDeathAnimation();
+            yield return new WaitForSeconds(1.5f);
+            // TODO: Implement end of battle.
+        }
+        else
+        {
+            StartCoroutine(PlayerActionCoroutine());
+        }
+
+        yield return new WaitForSeconds(1.0f);
     }
 
     private void PlayerAction()
@@ -91,26 +107,118 @@ public class BattleManager : MonoBehaviour
     {
         battleDialogBox.ToggleAttacks(false);
         battleDialogBox.ToggleDialogText(true);
-        
-        switch (selectedAttack)
+
+        var oldHPValue = enemyUnit.Creature.HP;
+
+        if (selectedAttack == 0)
         {
-            case 0:
-                yield return battleDialogBox.SetDialog($"You used {attacks[0].Base.Name}");
-                break;
-            case 1:
-                yield return battleDialogBox.SetDialog($"You used {attacks[1].Base.Name}");
-                break;
-            case 2:
-                yield return battleDialogBox.SetDialog($"You used {attacks[2].Base.Name}");
-                break;
-            case 3:
-                yield return battleDialogBox.SetDialog($"You used {attacks[3].Base.Name}");
-                break;
+            yield return battleDialogBox.SetDialog($"You used {attacks[0].Base.Name}");
+
+            var damageDesc = enemyUnit.Creature.ReceiveDamage(playerUnit.Creature, attacks[0]);
+            attacks[0].Pp--;
+            enemyHUD.UpdateCreatureData(oldHPValue);
+            yield return ShowDamageDescription(damageDesc);
+
+            if (damageDesc.Dead)
+            {
+                yield return battleDialogBox.SetDialog($"You have killed a {enemyUnit.Creature.Base.name}");
+                enemyUnit.PlayDeathAnimation();
+                yield return new WaitForSeconds(1.0f);
+                // TODO: Implement end of battle.
+            }
+            else
+            {
+                yield return new WaitForSeconds(1.0f);
+                StartCoroutine(EnemyAction());
+            }
         }
-        
+        else if (selectedAttack == 1)
+        {
+            yield return battleDialogBox.SetDialog($"You used {attacks[1].Base.Name}");
+
+            var damageDesc = enemyUnit.Creature.ReceiveDamage(playerUnit.Creature, attacks[1]);
+            attacks[0].Pp--;
+            enemyHUD.UpdateCreatureData(oldHPValue);
+            yield return ShowDamageDescription(damageDesc);
+
+            if (damageDesc.Dead)
+            {
+                yield return battleDialogBox.SetDialog($"You have killed a {enemyUnit.Creature.Base.name}");
+                enemyUnit.PlayDeathAnimation();
+                yield return new WaitForSeconds(1.0f);
+                // TODO: Implement end of battle.
+            }
+            else
+            {
+                yield return new WaitForSeconds(1.0f);
+                StartCoroutine(EnemyAction());
+            }
+        }
+        else if (selectedAttack == 2)
+        {
+            yield return battleDialogBox.SetDialog($"You used {attacks[2].Base.Name}");
+
+            var damageDesc = enemyUnit.Creature.ReceiveDamage(playerUnit.Creature, attacks[2]);
+            attacks[0].Pp--;
+            enemyHUD.UpdateCreatureData(oldHPValue);
+            yield return ShowDamageDescription(damageDesc);
+
+            if (damageDesc.Dead)
+            {
+                yield return battleDialogBox.SetDialog($"You have killed a {enemyUnit.Creature.Base.name}");
+                enemyUnit.PlayDeathAnimation();
+                yield return new WaitForSeconds(1.0f);
+                // TODO: Implement end of battle.
+            }
+            else
+            {
+                yield return new WaitForSeconds(1.0f);
+                StartCoroutine(EnemyAction());
+            }
+        }
+        else if (selectedAttack == 3)
+        {
+            yield return battleDialogBox.SetDialog($"You used {attacks[3].Base.Name}");
+
+            var damageDesc = enemyUnit.Creature.ReceiveDamage(playerUnit.Creature, attacks[3]);
+            attacks[0].Pp--;
+            enemyHUD.UpdateCreatureData(oldHPValue);
+            yield return ShowDamageDescription(damageDesc);
+
+            if (damageDesc.Dead)
+            {
+                yield return battleDialogBox.SetDialog($"You have killed a {enemyUnit.Creature.Base.name}");
+                enemyUnit.PlayDeathAnimation();
+                yield return new WaitForSeconds(1.0f);
+                // TODO: Implement end of battle.
+            }
+            else
+            {
+                yield return new WaitForSeconds(1.0f);
+                StartCoroutine(EnemyAction());
+            }
+        }
+
         playerUnit.PlayAttackAnimation();
         enemyUnit.PlayReceiveAttackAnimation();
         yield return new WaitForSeconds(1.0f);
-        StartCoroutine(EnemyAction());
+    }
+
+    IEnumerator ShowDamageDescription(DamageDescription description)
+    {
+        if (description.Critical > 1)
+        {
+            yield return battleDialogBox.SetDialog("A critical hit!");
+        }
+
+        if (description.Type > 1)
+        {
+            yield return battleDialogBox.SetDialog("It is extremely effective!");
+        }
+
+        if (description.Type < 1)
+        {
+            yield return battleDialogBox.SetDialog("It is not effective.");
+        }
     }
 }

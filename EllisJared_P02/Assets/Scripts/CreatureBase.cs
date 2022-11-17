@@ -26,21 +26,42 @@ public class CreatureBase : ScriptableObject
     public List<LearnableAttack> LearnableAttacks => learnableAttacks;
 }
 
-public enum CreatureType
-{
-    Normal,
-    Fire,
-    Shock,
-    Explosive,
-    Corrosive,
-}
+    public enum CreatureType
+    {
+        Normal,
+        Fire,
+        Shock,
+        Explosive,
+        Corrosive,
+    }
 
-[Serializable]
-public class LearnableAttack
-{
-    [SerializeField] private AttackBase attack;
-    [SerializeField] private int level;
+    public class TypeMatrix
+    {
+        private static float[][] matrix =
+        {
+            //                     NOR   FRE   SHK   EXP   COR
+            /*NOR*/ new float[] { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f },
+            /*FRE*/ new float[] { 1.5f, 0.5f, 1.0f, 1.5f, 1.0f },
+            /*SHK*/ new float[] { 1.5f, 1.5f, 0.5f, 1.0f, 1.0f },
+            /*EXP*/ new float[] { 2.0f, 1.5f, 0.5f, 0.5f, 1.0f },
+            /*COR*/ new float[] { 1.5f, 1.0f, 1.0f, 1.0f, 0.5f },
+        };
 
-    public AttackBase Attack => attack;
-    public int Level => level;
-}
+        public static float GetMultEffectiveness(CreatureType attackType, CreatureType defenderType)
+        {
+            int row = (int)attackType;
+            int col = (int)defenderType;
+
+            return matrix[row][col];
+        }
+    }
+
+    [Serializable]
+    public class LearnableAttack
+    {
+        [SerializeField] private AttackBase attack;
+        [SerializeField] private int level;
+
+        public AttackBase Attack => attack;
+        public int Level => level;
+    }

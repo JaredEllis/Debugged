@@ -16,7 +16,7 @@ public class HealthBar : MonoBehaviour
         float currentScale = healthBar.transform.localScale.x;
         float updateQuantity = currentScale - normalizedValue;
 
-        while (updateQuantity > Mathf.Epsilon)
+        while (currentScale - normalizedValue > Mathf.Epsilon)
         {
             currentScale -= updateQuantity * Time.deltaTime;
             healthBar.transform.localScale = new Vector3(currentScale, 1, 1);

@@ -9,6 +9,7 @@ public class BattleHUD : MonoBehaviour
     public Text creatureLevel;
 
     public HealthBar healthBar;
+    public Text creatureHealth;
 
     private Creature _creature;
 
@@ -17,7 +18,7 @@ public class BattleHUD : MonoBehaviour
         _creature = creature;
         creatureName.text = creature.Base.CreatureName;
         creatureLevel.text = $"LVL: {creature.Level}";
-        healthBar.SetHP((float)creature.HP/creature.MaxHP);
+        UpdateCreatureData(creature.HP);    
     }
 
     public void UpdateCreatureData(int oldHPValue)
@@ -31,7 +32,10 @@ public class BattleHUD : MonoBehaviour
         while (oldHpValue > _creature.HP)
         {
             oldHpValue--;
-            yield return new WaitForSeconds(0.5f);
+            creatureHealth.text = $"{oldHpValue}/{_creature.MaxHP}";
+            yield return new WaitForSeconds(0.04f);
         }
+
+        creatureHealth.text = $"{_creature.HP}/{_creature.MaxHP}";
     }
 }
