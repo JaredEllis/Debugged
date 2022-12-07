@@ -2,10 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
+    GameControls gameControls;
+    
     [SerializeField] BattleUnit playerUnit;
     [SerializeField] BattleHUD playerHUD;
 
@@ -222,5 +225,22 @@ public class BattleManager : MonoBehaviour
         {
             yield return battleDialogBox.SetDialog("It is not effective.");
         }
+    }
+
+    private void Update()
+    {
+        if(gameControls.GameInputs.ExitGame.triggered){ Application.Quit(); }
+        if(gameControls.GameInputs.ReloadScene.triggered){ SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
+    }
+
+    private void OnEnable()
+    {
+        gameControls ??= new GameControls();
+        gameControls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        gameControls.Disable();
     }
 }
