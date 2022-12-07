@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Audio;
 
 public class BattleHUD : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class BattleHUD : MonoBehaviour
             creatureHealth.text = $"{oldHpValue}/{_creature.MaxHP}";
             yield return new WaitForSeconds(0.04f);
         }
-
+        AudioManager.Instance.PlaySFX("HealthBarFX");
         creatureHealth.text = $"{_creature.HP}/{_creature.MaxHP}";
     }
 }

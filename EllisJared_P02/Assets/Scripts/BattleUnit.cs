@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Audio;
 
 public class BattleUnit : MonoBehaviour
 {
@@ -41,6 +42,7 @@ public class BattleUnit : MonoBehaviour
 
     public void PlayAttackAnimation()
     {
+        AudioManager.Instance.PlaySFX("AttackEffect");
         var seq = DOTween.Sequence();
         seq.Append(creatureImage.transform.DOLocalMoveX(initialPosition.x + (isPlayer ? 1 : -1)*60, 0.2f));
         seq.Append(creatureImage.transform.DOLocalMoveX(initialPosition.x, 0.3f));
@@ -48,6 +50,7 @@ public class BattleUnit : MonoBehaviour
 
     public void PlayReceiveAttackAnimation()
     {
+        AudioManager.Instance.PlaySFX("DamageEffect");
         creatureImage.transform.DOShakePosition(1, 20, 10, 90, false, true);
         var seq = DOTween.Sequence();
 
@@ -63,5 +66,7 @@ public class BattleUnit : MonoBehaviour
         var seq = DOTween.Sequence();
         seq.Join(creatureImage.DOFade(0, dieTimeAnimation));
         seq.Join(creatureImage.transform.DOShakePosition(1, 20, 10, 90, false, true));
+        AudioManager.Instance.PlaySFX("DeathEffect");
+        AudioManager.Instance.ToggleMusic();
     }
 }

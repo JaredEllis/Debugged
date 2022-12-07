@@ -22,7 +22,7 @@ public class HealthBar : MonoBehaviour
             healthBar.transform.localScale = new Vector3(currentScale, 1, 1);
             yield return null;
         }
-
+        
         healthBar.transform.localScale = new Vector3(normalizedValue, 1, 1);
     }
     

@@ -48,7 +48,7 @@ public class BattleManager : MonoBehaviour
         Attack attack = enemyUnit.Creature.RandomAttack();
         yield return battleDialogBox.SetDialog($"{enemyUnit.Creature.Base.name} has used {attack.Base.Name}");
 
-        var oldHPValue = playerUnit.Creature.HP;
+        var oldHPValue = enemyUnit.Creature.HP;
 
         enemyUnit.PlayAttackAnimation();
         playerUnit.PlayReceiveAttackAnimation();
@@ -109,6 +109,9 @@ public class BattleManager : MonoBehaviour
         battleDialogBox.ToggleDialogText(true);
 
         var oldHPValue = enemyUnit.Creature.HP;
+        
+        playerUnit.PlayAttackAnimation();
+        enemyUnit.PlayReceiveAttackAnimation();
 
         if (selectedAttack == 0)
         {
@@ -191,6 +194,7 @@ public class BattleManager : MonoBehaviour
                 enemyUnit.PlayDeathAnimation();
                 yield return new WaitForSeconds(1.0f);
                 // TODO: Implement end of battle.
+                
             }
             else
             {
@@ -199,8 +203,6 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        playerUnit.PlayAttackAnimation();
-        enemyUnit.PlayReceiveAttackAnimation();
         yield return new WaitForSeconds(1.0f);
     }
 
